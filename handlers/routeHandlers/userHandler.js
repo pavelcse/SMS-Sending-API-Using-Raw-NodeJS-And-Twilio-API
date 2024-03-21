@@ -210,10 +210,10 @@ handler._user.delete = (requestProperties, callback) => {
             }
         });
     } else {
-            callback(400, {
-                error: 'Requested uers not found!'
-            });
-        }
+        callback(400, {
+            error: 'Requested uers not found!'
+        });
+    }
 };
 
 module.exports = handler;
