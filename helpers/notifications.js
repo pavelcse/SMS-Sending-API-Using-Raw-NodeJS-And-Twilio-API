@@ -45,9 +45,6 @@ notifications.sendTwilioSms = (phone, msg, callback) => {
             },
         };
 
-        console.log(requestDetails);
-        console.log(payload);
-
         // instantiate the request object
         const req = https.request(requestDetails, (res) => {
             // get the status of the sent request
