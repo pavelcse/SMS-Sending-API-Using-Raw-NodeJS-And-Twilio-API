@@ -10,37 +10,8 @@ const http = require('http');
 const {handleReqRes} = require('./helpers/handleReqRes');
 const env = require('./helpers/environments');
 
-const data = require('./lib/data');
-
 // app object - module scaffolding
 const app = {};
-
-
-
-
-// testing data create
-// data.create('test', 'newfile', {"name": "Pavel", "age": 30}, (err) => {
-//     console.log('Error was', err);
-// });
-
-// text data read
-// data.read('test', 'newfile', (err, data) => {
-//     console.log(data, err);
-// });
-
-// test data update
-// data.update('test', 'newfile', {"name": "Pavel", "age": 35}, (err) => {
-//     console.log('Error was', err);
-// });
-
-// test data delete
-data.delete('test', 'newfile', (err) => {
-    console.log('Error was', err);
-});
-
-
-
-
 
 // create server
 app.createServer = () => {
