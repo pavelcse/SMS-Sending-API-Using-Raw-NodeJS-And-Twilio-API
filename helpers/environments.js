@@ -13,7 +13,7 @@ environments.staging = {
     envName: 'staging',
     secretKey: 'mynameispavel',
     maxChecks: 5,
-    twilio: {
+    twilio: { // signup/login for below credintial
         fromPhone: '',
         accountSid: '',
         authToken: '',
@@ -25,7 +25,7 @@ environments.production = {
     envName: 'production',
     secretKey: 'mynameispavel',
     maxChecks: 5,
-    twilio: {
+    twilio: { // signup/login for below credintial
         fromPhone: '',
         accountSid: '',
         authToken: '',
