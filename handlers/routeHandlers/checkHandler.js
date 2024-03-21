@@ -285,7 +285,6 @@ handler._check.delete = (requestProperties, callback) => {
                                         let checkPosition = userChecks.indexOf(id);
                                         if(checkPosition > -1) {
                                             userChecks.splice(checkPosition, 1);
-                                            console.log('Updated', userChecks);
                                             // reset the user data
                                             userObject.checks = userChecks;
                                             data.update('users', check.phone, userObject, (err) => {

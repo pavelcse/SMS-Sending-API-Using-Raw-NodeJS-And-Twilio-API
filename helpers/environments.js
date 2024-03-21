@@ -12,14 +12,24 @@ environments.staging = {
     port: 3001,
     envName: 'staging',
     secretKey: 'mynameispavel',
-    maxChecks: 5
+    maxChecks: 5,
+    twilio: {
+        fromPhone: '',
+        accountSid: '',
+        authToken: '',
+    },
 };
 
 environments.production = {
     port: 5000,
     envName: 'production',
     secretKey: 'mynameispavel',
-    maxChecks: 5
+    maxChecks: 5,
+    twilio: {
+        fromPhone: '',
+        accountSid: '',
+        authToken: '',
+    },
 };
 
 //detiremine which envirnonment was passed
