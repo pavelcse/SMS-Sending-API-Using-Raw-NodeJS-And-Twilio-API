@@ -1,0 +1,7 @@
+1. Start the API Server
+2. Create, Edit, Delete User
+3. Token based authentication
+4. Logout 
+5. Set links & Up/Down
+6. Edit/Delete links & rete limit
+7. Check up/down time

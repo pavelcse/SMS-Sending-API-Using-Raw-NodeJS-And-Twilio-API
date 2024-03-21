@@ -1,0 +1,13 @@
+{
+  "name": "raw-nodejs-uptime-monitoring-api",
+  "version": "1.0.0",
+  "description": "An Uptime Monitoring API Using Raw NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=staging nodemon index",
+    "production": "NODE_ENV=production nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pavel Parvej",
+  "license": "ISC"
+}
