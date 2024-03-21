@@ -7,31 +7,5 @@
 7. Check up/down time
 
 
-User Creation Object:
-{
-   "firstName": "Pavel",
-   "lastName" : "Parvez",
-   "phone": "01749896582",
-   "password": "1234",
-   "tosAgreement": true
-}
-
-Token Creation Object
-{
-   "phone": "01749896582",
-   "password": "1234"
-}
-
-Check Creation Object
-{
-    "protocol": "http",
-    "url": "yahoo.com",
-    "method": "GET",
-    "successCodes": [200, 201, 301],
-    "timeoutSeconds": 2
-
-}
-
-
 
 
