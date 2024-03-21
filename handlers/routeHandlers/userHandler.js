@@ -1,5 +1,6 @@
 const data = require('../../lib/data');
 const {hash, parseJSON} = require('../../helpers/utilities');
+const tokenHandler = require('./tokenHandler');
 
 const handler = {};
 
@@ -25,16 +26,27 @@ handler._user.get = (requestProperties, callback) => {
             ? requestProperties.queryStringObject.phone
             : false;
     if(phone) {
-        // lookup the data
-        data.read('users', phone, (err, usr) => {
-            const user = {...parseJSON(usr)}
-            if(!err && user) {
-                delete user.password;
-                callback(200, user);
-            } else {
-                callback(400, {
-                    error: 'Requested uers not found!'
+        // varify token
+        let token = typeof requestProperties.headerObject.token === 'string' ? requestProperties.headerObject.token : false;
+        tokenHandler._token.verify(token, phone, (verify) => {
+            //console.log(verify);
+            if(verify) {// lookup the data
+                // lookup the data
+                data.read('users', phone, (err, usr) => {
+                    const user = {...parseJSON(usr)}
+                    if(!err && user) {
+                        delete user.password;
+                        callback(200, user);
+                    } else {
+                        callback(400, {
+                            error: 'Requested uers not found!'
+                        });
+                    }
                 });
+            } else {
+                callback(403, {
+                    error: 'Authentication failed!'
+                }); 
             }
         });
     } else {
@@ -139,34 +151,44 @@ handler._user.put = (requestProperties, callback) => {
 
     if(phone) {
         if (firstName || lastName || password) {
-            // lookup the data
-            data.read('users', phone, (err, userData) => {
-                if(!err && userData) {
-                    const user = {...parseJSON(userData) };
-                    if(firstName) {
-                        user.firstName = firstName;
-                    }
-                    if(lastName) {
-                        user.lastName = lastName;
-                    }
-                    if(password) {
-                        user.password = hash(password);
-                    }
-                    data.update('users', phone, user, (err) => {
-                        if(!err) {
-                            callback(201, {
-                                message: "Users was created updated."
-                            })
+            // varify token
+            let token = typeof requestProperties.headerObject.token === 'string' ? requestProperties.headerObject.token : false;
+            tokenHandler._token.verify(token, phone, (verify) => {
+                if(verify) {
+                    // lookup the data
+                    data.read('users', phone, (err, userData) => {
+                        if(!err && userData) {
+                            const user = {...parseJSON(userData) };
+                            if(firstName) {
+                                user.firstName = firstName;
+                            }
+                            if(lastName) {
+                                user.lastName = lastName;
+                            }
+                            if(password) {
+                                user.password = hash(password);
+                            }
+                            data.update('users', phone, user, (err) => {
+                                if(!err) {
+                                    callback(201, {
+                                        message: "Users was updated successfully."
+                                    })
+                                } else {
+                                    callback(500, {
+                                        error: 'Could not update user!'
+                                    })
+                                }
+                            });
                         } else {
-                            callback(500, {
-                                error: 'Could not update user!'
-                            })
+                            callback(400, {
+                                error: 'Requested uers not found!'
+                            });
                         }
                     });
                 } else {
-                    callback(400, {
-                        error: 'Requested uers not found!'
-                    });
+                    callback(403, {
+                        error: 'Authentication failed!'
+                    }); 
                 }
             });
         } else {
@@ -190,12 +212,22 @@ handler._user.delete = (requestProperties, callback) => {
             : false;
     
     if(phone) {
-        data.read('users', phone, (err, userData) => {
-            if(!err && userData) {
-                data.delete('users', phone, (err) => {
-                    if(!err) {
-                        callback(200, {
-                            message: 'User deleted successfully.'
+        // varify token
+        let token = typeof requestProperties.headerObject.token === 'string' ? requestProperties.headerObject.token : false;
+        tokenHandler._token.verify(token, phone, (verify) => {
+            if(verify) {
+                data.read('users', phone, (err, userData) => {
+                    if(!err && userData) {
+                        data.delete('users', phone, (err) => {
+                            if(!err) {
+                                callback(200, {
+                                    message: 'User deleted successfully.'
+                                });
+                            } else {
+                                callback(400, {
+                                    error: 'Requested uers not found!'
+                                });
+                            }
                         });
                     } else {
                         callback(400, {
@@ -204,9 +236,9 @@ handler._user.delete = (requestProperties, callback) => {
                     }
                 });
             } else {
-                callback(400, {
-                    error: 'Requested uers not found!'
-                });
+                callback(403, {
+                    error: 'Authentication failed!'
+                }); 
             }
         });
     } else {
